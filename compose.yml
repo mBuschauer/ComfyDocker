@@ -11,7 +11,7 @@ services:
     volumes:
       - ./src:/root/src
       - ./ComfyUI/:/home/ubuntu/ComfyUI
-    command: ["python3", "ComfyUI/main.py"]
+    command: ["python3", "/home/ubuntu/ComfyUI/main.py", "--normalvram"]
     security_opt:
       - seccomp=unconfined
     devices:
@@ -20,7 +20,6 @@ services:
     group_add:
       - video
     ipc: host
-    shm_size: 16G
+    shm_size: 20G
     image: rocm/pytorch:latest 
-    ports:
-      - "8188:8188"
+    network_mode: host
