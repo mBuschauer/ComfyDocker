@@ -1,0 +1,26 @@
+services:
+  pytorch:
+    stdin_open: true
+    build:
+        context: .
+        dockerfile: Dockerfile
+    tty: true
+    container_name: pytorch
+    cap_add:
+      - SYS_PTRACE
+    volumes:
+      - ./src:/root/src
+      - ./ComfyUI/:/home/ubuntu/ComfyUI
+    command: ["python3", "ComfyUI/main.py"]
+    security_opt:
+      - seccomp=unconfined
+    devices:
+      - /dev/kfd
+      - /dev/dri
+    group_add:
+      - video
+    ipc: host
+    shm_size: 16G
+    image: rocm/pytorch:latest 
+    ports:
+      - "8188:8188"
